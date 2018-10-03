@@ -2,7 +2,9 @@ package br.com.caelum.contas.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +25,11 @@ public class ContaController {
 
 	@RequestMapping("/adicionaConta")
 	public String adiciona(@Valid Conta conta, BindingResult result) {
-		
+
 		if (result.hasErrors()) {
 			return "formulario";
 		}
-		
+
 		System.out.println("salvando " + conta.getDescricao());
 
 		ContaDAO contaDAO = new ContaDAO();
@@ -35,6 +37,13 @@ public class ContaController {
 		contaDAO.adiciona(conta);
 
 		return "conta/conta-adicionada";
+	}
+
+	@RequestMapping("/pagaConta")
+	public void paga(Conta conta, HttpServletResponse reponse) {
+		ContaDAO dao = new ContaDAO();
+		dao.paga(conta.getId());
+		reponse.setStatus(200);
 	}
 
 	@RequestMapping("removeConta")

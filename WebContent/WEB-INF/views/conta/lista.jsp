@@ -7,6 +7,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="resources/js/jquery.js"></script>
+<script type="text/javascript">
+	
+	function deuCerto(dadosDaResposta){
+		alert("Conta paga com sucesso.");
+	} 
+	
+	function pagaAgora(id){
+		$.post("pagaConta", {'id' : id}, function(){
+			$("#conta_"+id).html("Paga");		
+		});
+			
+	}
+	
+	function pagaAgoraOld(id){
+		$.post("pagaConta", {'id' : id}, function(){
+			alert("Conta paga com sucesso");		
+		});
+			
+	}
+
+	function pagaAgoraOld(id){
+		$.get("pagaConta?id=" +id, deuCerto);
+	}
+	
+</script>
 </head>
 <body>
 	<table style="height: 10px; width: 775px;" border="1">
@@ -17,7 +43,7 @@
 			<th>Tipo</th>
 			<th>Pago</th>
 			<th>Data de Pagamento</th>
-			<th>Ações</th>
+			<th colspan="3">Ações</th>
 		</tr>
 
 		<c:forEach items="${todasContas}" var="conta">
@@ -26,7 +52,7 @@
 				<td>${conta.descricao}</td>
 				<td>${conta.valor}</td>
 				<td>${conta.tipo}</td>
-				<td><c:if test="${conta.paga eq false}">
+				<td id="conta_${conta.id}"><c:if test="${conta.paga eq false}">
 						Não Paga!
 					</c:if> <c:if test="${conta.paga eq true}">
 						Paga!
@@ -37,6 +63,14 @@
 				</td>
 				<td>
 					<a href="mostraConta?id=${conta.id}">Alterar</a>
+				</td>
+				<td>
+					<c:if test="${conta.paga eq  false}">
+						<a href="#" onclick="pagaAgora(${conta.id})">Pagar agora!</a>
+					</c:if>
+					<c:if test="${conta.paga eq true }">
+						Paga!
+					</c:if>
 				</td>
 						
 			</tr>
