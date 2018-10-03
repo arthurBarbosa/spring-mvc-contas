@@ -9,7 +9,7 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object controller)
 	throws Exception {
-		
+		// se for a pagina de login ou resources, deixa passar
 		String uri = request.getRequestURI();
 		if(uri.endsWith("loginForm") || uri.endsWith("efetuaLogin") || uri.contains("resources")) {
 			return true;
