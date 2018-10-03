@@ -9,6 +9,7 @@
 </head>
 <body>
 	<h3>Alterar Conta</h3>
+	
 	<form action="alteraConta" method="post">
 		Descrição: <br />
 		<textarea name="descricao" rows="5" cols="100">${conta.descricao}</textarea>
